@@ -1,4 +1,5 @@
 # Implementation of Binary Search Tree
+import queue
 
 class Node(object):
 
@@ -40,15 +41,44 @@ class BinarySearchTree(object):
             self.print_preorder(currentNode.left)
             self.print_preorder(currentNode.right)
 
-    def pre_order(self):
-        currentNode = self.root
-        self.print_preorder(currentNode)
+    def print_inorder(self, currentNode):
+        if currentNode != None:
+            self.print_inorder(currentNode.left)
+            print(currentNode.data)
+            self.print_inorder(currentNode.right)
 
-    def print_tree(self):
-        node = self.root
-        print(node.data)
-        self.print_left(node.left)
-        self.print_right(node.right)
+    def print_postorder(self, currentNode):
+        if currentNode != None:
+            self.print_postorder(currentNode.left)
+            self.print_postorder(currentNode.right)
+            print(currentNode.data)
+
+    def print_levelorder(self, currentNode):
+
+        q = queue.Queue()
+        q.put(currentNode)
+
+        while not q.empty():
+
+           node = q.get()
+           if node.left is not None:
+               q.put(node.left)
+
+           if  node.right is not None:
+               q.put(node.right)
+
+           print(node.data)
+
+
+
+    def print_tree_ALL(self):
+        currentNode = self.root
+        print("-----------PRE-ORDER-----------")
+        self.print_preorder(currentNode)
+        print("-----------IN-ORDER-----------")
+        self.print_inorder(currentNode)
+        print("-----------POST-ORDER-----------")
+        self.print_postorder(currentNode)
 
 a = BinarySearchTree()
 a.addNode(3)
@@ -58,4 +88,8 @@ a.addNode(11)
 a.addNode(4)
 a.addNode(7)
 a.addNode(8)
-a.pre_order()
+a.addNode(2)
+a.addNode(1)
+a.addNode(1)
+#a.print_tree_ALL()
+a.print_levelorder(a.root)
